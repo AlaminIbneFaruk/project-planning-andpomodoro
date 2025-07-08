@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Trophy, MapPin, Gamepad2, Timer } from 'lucide-react';
+import { Trophy, MapPin, Gamepad2, Timer, Plus } from 'lucide-react';
 import ChecklistApp from './ChecklistApp';
 import TourismManagement from './TourismManagement';
 import PomodoroTimer from './PomodoroTimer';
+import TaskManager from './TaskManager';
 
-type TabType = 'gamify' | 'tourism' | 'pomodoro';
+type TabType = 'gamify' | 'tourism' | 'pomodoro' | 'tasks';
 
 const TabSystem: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('gamify');
@@ -33,6 +34,14 @@ const TabSystem: React.FC = () => {
       description: 'Focus timer for productive work sessions',
       color: 'from-orange-500 to-red-500',
       bgColor: 'from-orange-50 via-white to-red-50'
+    },
+    {
+      id: 'tasks' as TabType,
+      name: 'Task Manager',
+      icon: <Plus className="w-5 h-5" />,
+      description: 'Create and manage your custom tasks',
+      color: 'from-emerald-600 to-teal-600',
+      bgColor: 'from-emerald-50 via-white to-teal-50'
     }
   ];
 
@@ -44,6 +53,8 @@ const TabSystem: React.FC = () => {
         return <TourismManagement />;
       case 'pomodoro':
         return <PomodoroTimer onBack={() => setActiveTab('gamify')} />;
+      case 'tasks':
+        return <TaskManager />;
       default:
         return <ChecklistApp />;
     }
