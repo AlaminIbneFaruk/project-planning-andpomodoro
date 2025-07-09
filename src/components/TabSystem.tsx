@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Trophy, MapPin, Gamepad2, Timer, Plus } from 'lucide-react';
+import { Trophy, MapPin, Gamepad2, Timer, Plus, BookOpen } from 'lucide-react';
 import ChecklistApp from './ChecklistApp';
 import TourismManagement from './TourismManagement';
 import PomodoroTimer from './PomodoroTimer';
 import TaskManager from './TaskManager';
+import SetupGuide from './SetupGuide';
 
-type TabType = 'gamify' | 'tourism' | 'pomodoro' | 'tasks';
+type TabType = 'gamify' | 'tourism' | 'pomodoro' | 'tasks' | 'setup';
 
 const TabSystem: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('gamify');
@@ -42,6 +43,14 @@ const TabSystem: React.FC = () => {
       description: 'Create and manage your custom tasks',
       color: 'from-emerald-600 to-teal-600',
       bgColor: 'from-emerald-50 via-white to-teal-50'
+    },
+    {
+      id: 'setup' as TabType,
+      name: 'Setup Guide',
+      icon: <BookOpen className="w-5 h-5" />,
+      description: 'Deploy to Netlify with Supabase integration',
+      color: 'from-indigo-600 to-purple-600',
+      bgColor: 'from-indigo-50 via-white to-purple-50'
     }
   ];
 
@@ -55,6 +64,8 @@ const TabSystem: React.FC = () => {
         return <PomodoroTimer onBack={() => setActiveTab('gamify')} />;
       case 'tasks':
         return <TaskManager />;
+      case 'setup':
+        return <SetupGuide onBack={() => setActiveTab('gamify')} />;
       default:
         return <ChecklistApp />;
     }
