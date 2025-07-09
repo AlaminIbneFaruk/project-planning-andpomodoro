@@ -91,9 +91,25 @@ const TaskManager: React.FC = () => {
           </div>
           <h2 className="text-xl font-semibold text-gray-800 mb-2">Connection Error</h2>
           <p className="text-gray-600 mb-4">{error}</p>
-          <p className="text-sm text-gray-500">
-            Please make sure Supabase is connected. Click "Connect to Supabase" in the top right corner.
-          </p>
+          <div className="space-y-4">
+            <p className="text-sm text-gray-500">
+              Please connect to Supabase to use the Task Manager functionality.
+            </p>
+            <a
+              href="https://bolt.new/setup/supabase"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all shadow-lg"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.362 9.354H12V.396a.396.396 0 0 0-.716-.233L2.203 12.424l-.401.562a1.04 1.04 0 0 0 0 1.028l.401.562 9.081 12.261a.396.396 0 0 0 .716-.233V17.64h9.362c.653 0 1.182-.529 1.182-1.182V10.536c0-.653-.529-1.182-1.182-1.182Z"/>
+              </svg>
+              Connect to Supabase
+            </a>
+            <p className="text-xs text-gray-400">
+              This will open the Supabase setup guide in a new tab
+            </p>
+          </div>
         </div>
       </div>
     )
