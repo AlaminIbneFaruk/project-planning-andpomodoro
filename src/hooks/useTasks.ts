@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
+import { supabase, isSupabaseConfigured } from '../lib/supabase'
 import type { Database } from '../lib/supabase'
 
 type Task = Database['public']['Tables']['tasks']['Row']
@@ -24,6 +24,13 @@ export const useTasks = () => {
   const fetchTasks = async () => {
     try {
       setLoading(true)
+      
+      // Check if Supabase is configured
+      if (!isSupabaseConfigured) {
+        setError('Supabase is not configured. Please connect to Supabase to use the Task Manager.')
+        return
+      }
+
       const userId = getCurrentUserId()
       
       const { data, error } = await supabase
@@ -34,6 +41,7 @@ export const useTasks = () => {
 
       if (error) throw error
       setTasks(data || [])
+      setError(null)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
@@ -43,6 +51,10 @@ export const useTasks = () => {
 
   const createTask = async (taskData: Omit<TaskInsert, 'user_id'>) => {
     try {
+      if (!isSupabaseConfigured) {
+        throw new Error('Supabase is not configured. Please connect to Supabase first.')
+      }
+
       const userId = getCurrentUserId()
       const { data, error } = await supabase
         .from('tasks')
@@ -61,6 +73,10 @@ export const useTasks = () => {
 
   const updateTask = async (id: string, updates: TaskUpdate) => {
     try {
+      if (!isSupabaseConfigured) {
+        throw new Error('Supabase is not configured. Please connect to Supabase first.')
+      }
+
       const { data, error } = await supabase
         .from('tasks')
         .update({ ...updates, updated_at: new Date().toISOString() })
@@ -79,6 +95,10 @@ export const useTasks = () => {
 
   const deleteTask = async (id: string) => {
     try {
+      if (!isSupabaseConfigured) {
+        throw new Error('Supabase is not configured. Please connect to Supabase first.')
+      }
+
       const { error } = await supabase
         .from('tasks')
         .delete()
